@@ -1,0 +1,41 @@
+{% extends 'receptionist_base.html' %} {% block title %}reception dashboard
+{%endblock %} {% block content %}
+
+<div class="dashboard-overview">
+  <h1>Welcome, Receptionist!</h1>
+  <p>Use the sidebar to navigate through your tasks.</p>
+
+  <div class="dashboard-summary">
+    <div class="summary-card">
+      <h3>total</h3>
+      Doctors: <span>{{ total_doctors }}</span> <br />
+      Patients: <span>{{ total_patients }}</span>
+    </div>
+
+    <div class="status-box">
+      <h3>Appointments Status</h3>
+      <ul>
+        <li>Scheduled: {{ status_counts.scheduled|default:"0" }}</li>
+        <li>Completed: {{ status_counts.completed|default:"0" }}</li>
+        <li>Rejected: {{ status_counts.rejected|default:"0" }}</li>
+        <li>Cancelled: {{ status_counts.cancelled|default:"0" }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <hr />
+
+  <h3>
+    Doctors Available Right Now ({{ current_date }} {{current_time|time:"H:i"}})
+  </h3>
+  {% if available_now_doctors %}
+  <ul class="doctor-list">
+    {% for doctor in available_now_doctors %}
+    <li>{{ doctor.name }} ({{ doctor.specialization }})</li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <p>No doctors are currently available.</p>
+  {% endif %}
+</div>
+{% endblock %}

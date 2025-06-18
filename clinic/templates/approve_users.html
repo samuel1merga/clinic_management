@@ -1,0 +1,67 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+<h2>Pending Approvals</h2>
+
+<h3>Pending Doctors</h3>
+{% if doctors %}
+<table border="1" cellpadding="5" cellspacing="0">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Doctor file</th>
+      <th>doctor id</th>
+      <th>Approve</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for doctor in doctors %}
+    <tr>
+      <td>{{ doctor.name }}</td>
+      <td>
+        {% if doctor.personal_info %}
+        <a href="{{ doctor.personal_info.url }}" target="_blank">View File</a>
+        {% else %} No file uploaded {% endif %}
+      </td>
+
+      <td>{{ doctor.doctor_id }}</td>
+      <td>
+        <form method="post" style="display: inline">
+          {% csrf_token %}
+          <input type="hidden" name="user_type" value="doctor" />
+          <input type="hidden" name="user_id" value="{{ doctor.id }}" />
+          <button type="submit" name="action" value="approve">Approve</button>
+          <button
+            type="submit"
+            name="action"
+            value="delete"
+            onclick="return confirm('Are you sure you want to delete {{ doctor.name }}?')"
+          >
+            Delete
+          </button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="pagination">
+  <span class="step-links">
+    {% if doctors.has_previous %}
+    <a href="?doctor_page=1">&laquo; first</a>
+    <a href="?doctor_page={{ doctors.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ doctors.number }} of {{ doctors.paginator.num_pages }}.
+    </span>
+
+    {% if doctors.has_next %}
+    <a href="?doctor_page={{ doctors.next_page_number }}">next</a>
+    <a href="?doctor_page={{ doctors.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+{% else %}
+<p>No pending doctors.</p>
+{% endif %} {% endblock %}

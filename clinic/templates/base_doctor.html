@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Doctor Panel{% endblock %}</title>
+    <style>
+      body,
+      h1,
+      h2,
+      p,
+      ul,
+      li,
+      a,
+      label,
+      input,
+      select,
+      textarea,
+      button {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+      /* Reset and base styles */
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+        background-color: #f9f9f9;
+        color: #333;
+        line-height: 1.5;
+        padding: o;
+        display: flex;
+      }
+      /* HEADER */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #1c4e80;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 1000;
+      }
+
+      header .title {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+
+      header .nav a:hover,
+      header .nav a:focus {
+        background-color: rgba(236, 240, 241, 0.2);
+        outline: none;
+      }
+      header .nav a {
+        color: #ecf0f1;
+        margin-right: 20px;
+        font-weight: 400;
+        font-size: 1rem;
+        text-decoration: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      header .nav a:hover {
+        text-decoration: underline;
+      }
+
+      /* FOOTER */
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #34495e;
+        color: #ecf0f1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        padding: 10px 0;
+        z-index: 1000;
+      }
+
+      footer .about {
+        margin-bottom: 5px;
+      }
+
+      footer .about a {
+        color: #ecf0f1;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      footer .about a:hover {
+        text-decoration: none;
+        color: #ebeb15;
+      }
+
+      footer .copyright {
+        font-size: 14px;
+        color: #bdc3c7;
+      }
+      /* Layout */
+      .container {
+        display: flex;
+        min-height: 100vh;
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: 220px;
+        background-color: #34495e;
+        color: #ecf0f1;
+        padding: 20px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        position: fixed;
+        height: 100vh;
+      }
+
+      .sidebar h2 {
+        margin-bottom: 20px;
+        font-weight: 700;
+        font-size: 1.5rem;
+        border-bottom: 1px solid #2c3e50;
+        padding-bottom: 10px;
+      }
+
+      .sidebar a {
+        color: #bdc3c7;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 10px 12px;
+        border-radius: 5px;
+        transition: background-color 0.25s ease, color 0.25s ease;
+      }
+
+      .sidebar a:hover {
+        background-color: #2c3e50;
+        color: #ecf0f1;
+      }
+
+      .sidebar a.active {
+        background-color: #2980b9;
+        color: white;
+      }
+
+      /* Main content next to sidebar */
+      .main-content {
+        margin-left: 240px;
+        padding: 30px 40px;
+        flex-grow: 1;
+      }
+
+      h1,
+      h2 {
+        color: #0077cc;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+        border-radius: 6px;
+        overflow: hidden;
+      }
+
+      thead {
+        background-color: #0077cc;
+        color: white;
+        text-align: left;
+        font-weight: 600;
+      }
+
+      th,
+      td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tbody tr:hover {
+        background-color: #f0f8ff;
+      }
+
+      a {
+        color: #0077cc;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      a:hover {
+        text-decoration: none;
+      }
+
+      p {
+        font-style: italic;
+        color: #666;
+      }
+
+      ul {
+        background-color: #fffae6;
+        border: 1px solid #ffecb3;
+        padding: 10px 20px;
+        border-radius: 5px;
+        list-style-type: none;
+        color: #665200;
+        max-width: 600px;
+      }
+
+      ul li {
+        margin: 0.5rem 0;
+      }
+      form {
+        background: white;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin-top: 1rem;
+        font-weight: bold;
+      }
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.5rem;
+        margin-top: 0.3rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 1rem;
+      }
+      button {
+        margin-top: 1.5rem;
+        background-color: #007acc;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1.1rem;
+      }
+      button:hover {
+        background-color: #005fa3;
+      }
+      /* Compact radio group */
+      .test-radio-group {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin: 10px 0 20px;
+        padding: 8px;
+        background-color: #fefefe;
+        border: 1px solid #ccddee;
+        border-radius: 6px;
+        width: fit-content;
+      }
+
+      /* Radio option styling */
+      .radio-option {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        background-color: #ffffff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        padding: 5px 10px;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      .radio-option:hover {
+        background-color: #eef6fc;
+      }
+
+      /* Radio input style */
+      .radio-option input[type="radio"] {
+        margin-right: 8px;
+        transform: scale(1.1);
+        accent-color: #2980b9;
+      }
+
+      .messages {
+        margin-bottom: 1rem;
+      }
+      .messages .error {
+        color: red;
+      }
+      .messages .success {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="title">Wolaita Sodo University Clinic System</div>
+      <div class="nav">
+        <a href="/">Home</a>
+      </div>
+    </header>
+
+    <nav class="sidebar">
+      <h2>Dr. {{ doctor.name }}</h2>
+      <a
+        href="{% url 'doctor_dashboard' %}"
+        class="{% if request.resolver_match.url_name == 'doctor_dashboard' %}active{% endif %}"
+        >Dashboard</a
+      >
+      <a
+        href="{% url 'doctor_schedule' %}"
+        class="{% if request.resolver_match.url_name == 'doctor_schedule' %}active{% endif %}"
+        >Schedule</a
+      >
+      <a
+        href="{% url 'upload_medical_record' %}"
+        class="{% if request.resolver_match.url_name == 'upload_medical_record' %}active{% endif %}"
+        >Upload Record</a
+      >
+      <a
+        href="{% url 'completed_appointments' %}"
+        class="{% if request.resolver_match.url_name == 'completed_appointments' %}active{% endif %}"
+        >Completed</a
+      >
+      <a
+        href="{% url 'request_lab_test' %}"
+        class="{% if request.resolver_match.url_name == 'request_lab_test' %}active{% endif %}"
+        >request</a
+      >
+      <a
+        href="{% url 'doctor_view_results'  %}"
+        class="{% if request.resolver_match.url_name == 'doctor_view_results' and request.resolver_match.kwargs.doctor_id|stringformat:'s' == doctor_id|stringformat:'s' %}active{% endif %}"
+      >
+        view result
+      </a>
+      <a href="{% url 'logout' %}">logout</a>
+    </nav>
+
+    <section class="main-content">{% block content %} {% endblock %}</section>
+    <footer>
+      <div class="copyright">
+        &copy; 2025 Your Clinic Management System. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,28 @@
+{% extends 'base_admin.html' %} {% block content %}
+<h2>{{ action }} Lab Test</h2>
+
+{% if error %}
+<p style="color: red">{{ error }}</p>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+  <label>Name:</label><br />
+  <input
+    type="text"
+    name="name"
+    value="{{ labtest.name|default:'' }}"
+  /><br /><br />
+
+  <label>Price (ETB):</label><br />
+  <input
+    type="text"
+    name="price"
+    value="{{ labtest.price|default:'' }}"
+  /><br /><br />
+
+  <button type="submit">Save</button>
+</form>
+
+<a href="{% url 'lab_test_list' %}">Back to Lab Tests</a>
+{%endblock%}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Doctor Registration</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #e6f0ff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        width: 400px;
+      }
+
+      h2 {
+        text-align: center;
+        color: #007acc;
+      }
+
+      label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #007acc;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #005f99;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Doctor Registration</h2>
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="doctor_id">Doctor ID</label>
+        <input type="text" id="doctor_id" name="doctor_id" required />
+
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" required />
+
+        <label for="specialization">Specialization</label>
+        <input type="text" id="specialization" name="specialization" required />
+
+        <label for="personal_file">Upload Personal Document</label>
+        <input type="file" id="personal_file" name="personal_file" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+  </body>
+</html>

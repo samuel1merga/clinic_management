@@ -1,0 +1,7 @@
+{% extends 'base_admin.html' %}h
+<h1></h1>
+{% block content %} {% if request.user.is_authenticated %}
+<h2>Welcome, {{ request.user.username }}</h2>
+{% endif %}
+<p>use the side bar to do your role</p>
+{% endblock %}

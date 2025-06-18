@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>wsu Clinic Management System</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f8f8f8;
+        padding: 20px;
+      }
+      .container {
+        margin: auto;
+
+        padding: 20px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+      a {
+        display: inline-block;
+        margin-top: 0px;
+        color: #2980b9;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+        padding: 15px;
+      }
+      /* HEADER */
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #1c4e80;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 1000;
+      }
+
+      header .title {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+
+      header .nav a:hover,
+      header .nav a:focus {
+        background-color: rgba(236, 240, 241, 0.2);
+        outline: none;
+      }
+      header .nav a {
+        color: #ecf0f1;
+        margin-right: 20px;
+        font-weight: 400;
+        font-size: 1rem;
+        text-decoration: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      header .nav a:hover {
+        text-decoration: underline;
+      }
+
+      /* FOOTER */
+      footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background-color: #34495e;
+        color: #ecf0f1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.9rem;
+        padding: 10px 0;
+        z-index: 1000;
+      }
+
+      footer .about {
+        margin-bottom: 5px;
+      }
+
+      footer .about a {
+        color: #ecf0f1;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      footer .about a:hover {
+        text-decoration: none;
+        color: #ebeb15;
+      }
+
+      footer .copyright {
+        font-size: 14px;
+        color: #bdc3c7;
+      }
+
+      a:hover {
+        text-decoration: none;
+        color: #3ecdda;
+      }
+      input {
+        padding: 8px;
+        margin: 5px 0;
+        width: 100%;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+      h2 {
+        color: #0077cc;
+        margin-bottom: 1rem;
+        font-weight: 600;
+        text-align: center;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+
+      form {
+        max-width: 350px;
+        margin: 0 auto;
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        font-family: inherit;
+      }
+
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 1rem;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type="text"]:focus,
+      input[type="password"]:focus {
+        border-color: #0077cc;
+        outline: none;
+      }
+
+      button[type="submit"] {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        background-color: #0077cc;
+        border: none;
+        border-radius: 6px;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+
+      button[type="submit"]:hover {
+        background-color: #005fa3;
+      }
+
+      .messages {
+        max-width: 350px;
+        margin: 0 auto 1rem;
+        font-family: inherit;
+      }
+
+      .alert {
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        border-radius: 6px;
+        font-size: 0.9rem;
+      }
+
+      .alert-success {
+        background-color: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+
+      .alert-error,
+      .alert-danger {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+
+      .alert-warning {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="title">Wolaita Sodo University Clinic System</div>
+      <div class="nav">
+        <a href="/">Home</a>
+      </div>
+    </header>
+    <div class="container">{% block content %}{% endblock %}</div>
+
+    <footer>
+      <div class="copyright">
+        &copy; 2025 Your Clinic Management System. All rights reserved.
+      </div>
+    </footer>
+  </body>
+</html>

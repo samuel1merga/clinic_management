@@ -1,0 +1,30 @@
+{% extends 'base_doctor.html' %} {% block title %}{{ doctor.name }}'s
+Schedule{%endblock %} {% block content %}
+
+<h1>{{ doctor.name }}'s Schedule</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Patient Name</th>
+      <th>Appointment Date</th>
+      <th>Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for appointment in appointments %}
+    <tr>
+      <td>{{ appointment.patient.name }}</td>
+      <td>{{ appointment.date }}</td>
+      <td>{{ appointment.time }}</td>
+      <td>{{ appointment.status }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="4">No appointments scheduled.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{%endblock %}

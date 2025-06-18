@@ -1,0 +1,72 @@
+{% extends 'receptionist_base.html' %}
+
+{% block title %}book appointment{% endblock %}
+
+{% block content %}
+
+<body>
+  <h1>Schedule an Appointment</h1>
+
+  {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <form method="GET" id="doctorForm">
+  <label for="doctor_id">Select Doctor to View Appointments:</label>
+  <select name="doctor_id" id="doctor_id" required onchange="document.getElementById('doctorForm').submit();">
+    <option value="">-- Select Doctor --</option>
+    {% for doctor in doctors %}
+    <option value="{{ doctor.id }}" {% if selected_doctor and doctor.id == selected_doctor.id %}selected{% endif %}>
+      {{ doctor.name }} ({{ doctor.specialization }})
+    </option>
+    {% endfor %}
+  </select>
+</form>
+
+  {% if selected_doctor %}
+    <h2>Existing Appointments for Dr. {{ selected_doctor.name }}</h2>
+    {% if doctor_appointments %}
+      <ul>
+        {% for appt in doctor_appointments %}
+        <li>{{ appt.date }} at {{ appt.time }} - Patient: {{ appt.patient.name }} -stuts: {{ appt.status }}</li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No appointments found.</p>
+    {% endif %}
+  {% endif %}
+
+  <hr>
+
+  <!-- Appointment Scheduling Form -->
+  <form method="POST">
+    {% csrf_token %}
+   <label for="patient_id">Patient:</label>
+<select name="patient_id" id="patient_id" required>
+  {% for patient in patients %}
+  <option value="{{ patient.id }}" {% if selected_patient and patient.id == selected_patient.id %}selected{% endif %}>
+    {{ patient.name }}
+  </option>
+  {% endfor %}
+</select><br><br>
+
+    <label for="doctor_id">Doctor:</label>
+    <select name="doctor_id" id="doctor_id" required>
+      {% for doctor in doctors %}
+      <option value="{{ doctor.id }}">{{ doctor.name }}</option>
+      {% endfor %}
+    </select><br><br>
+
+    <label for="date">Date:</label>
+    <input type="date" name="date" required><br><br>
+
+    <label for="time">Time:</label>
+    <input type="time" name="time" required><br><br>
+
+    <button type="submit">Schedule Appointment</button>
+  </form>
+{%endblock%}

@@ -1,0 +1,29 @@
+{% extends 'base_admin.html' %} {% block content %}
+
+<h2>All Invoices Summary</h2>
+
+<p><strong>Total Collected:</strong> {{ total_collected }} ETB</p>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Invoice ID</th>
+      <th>Patient</th>
+      <th>Date Issued</th>
+      <th>Total Amount</th>
+      <th>Paid?</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for invoice in invoices %}
+    <tr>
+      <td>{{ invoice.id }}</td>
+      <td>{{ invoice.patient.name }}</td>
+      <td>{{ invoice.date_issued }}</td>
+      <td>{{ invoice.total_amount }} ETB</td>
+      <td>{{ invoice.is_paid|yesno:"Yes,No" }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{%endblock%}

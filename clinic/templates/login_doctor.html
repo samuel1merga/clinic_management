@@ -1,0 +1,21 @@
+{% extends 'base.html' %} {%block content %}
+<h2>doctor login</h2>
+<form method="post">
+  {% csrf_token %}
+  <input name="name" placeholder="Username" required />
+  <input name="password" type="password" placeholder="Password" required />
+  <button type="submit">Login</button>
+  {% if error %}
+  <p>{{ error }}</p>
+  {% endif %}
+  <p>do not have an account</p>
+  <a href="/register/doctor/">sign up</a>
+</form>
+
+{% if messages %}
+<ul>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {%endblock%}

@@ -1,0 +1,18 @@
+{% extends 'base.html' %} {%block content %}
+<h2>patient login</h2>
+<form method="post">
+  {% csrf_token %}
+  <input name="username" placeholder="Username" required />
+  <input name="password" type="password" placeholder="Password" required />
+  <button type="submit">Login</button>
+  {% if error %}
+  <p>{{ error }}</p>
+  {% endif %}
+</form>
+{% if messages %}
+<ul>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {%endblock%}

@@ -1,0 +1,47 @@
+{%extends 'base.html'%}{%block content%}
+<style>
+  body {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-top: 150px;
+  }
+  .role-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .role-button {
+    background-color: #0077cc;
+    color: white;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+  }
+
+  .role-button:hover {
+    background-color: #005fa3;
+  }
+</style>
+<div class="home-container">
+  <h1>Welcome to Wolaita Sodo University Clinic Portal</h1>
+  <p>Please select your role to access the system:</p>
+
+  <div class="role-buttons">
+    <a href="{% url 'login_patient' %}" class="role-button"> Patient</a>
+    <a href="{% url 'login_doctor' %}" class="role-button"> Doctor</a>
+    <a href="{% url 'login' %}" class="role-button"> Receptionist</a>
+    <a href="{% url 'laboratorist_login' %}" class="role-button"
+      >Laboratorist</a
+    >
+    <a href="{% url 'login_admiin' %}" class="role-button"> Admin</a>
+  </div>
+</div>
+
+{%endblock%}

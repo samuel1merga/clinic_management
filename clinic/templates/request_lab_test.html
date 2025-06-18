@@ -1,0 +1,36 @@
+{% extends 'base_doctor.html' %} {% block title %} {{ doctor.name }}'s Schedule
+{% endblock %} {% block content %}
+<h1><br /></h1>
+<h2>Request Lab Test for {{ patient.name }}</h2>
+<form method="post">
+  {% csrf_token %}
+
+  <label>Patient:</label>
+  <select name="patient_id" required>
+    {% for patient in patients %}
+    <option value="{{ patient.id }}">{{ patient.name }}</option>
+    {% endfor %}
+  </select>
+
+  <label><strong>Select Test:</strong></label>
+  <div class="test-radio-group">
+    {% for test in tests %}
+    <label class="radio-option">
+      <input type="radio" name="test_id" value="{{ test.id }}" required />
+      {{ test.name }}
+    </label>
+    {% endfor %}
+  </div>
+
+  <label><strong>Description:</strong></label
+  ><br />
+  <textarea
+    name="description"
+    rows="3"
+    placeholder="Additional notes or context for the test..."
+  ></textarea
+  ><br />
+
+  <button type="submit">Submit Request</button>
+</form>
+{% endblock %}

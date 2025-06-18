@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Submit Lab Result</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f0f8ff;
+        margin: 0;
+        padding: 40px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .form-container {
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+        padding: 30px 40px;
+        max-width: 600px;
+        width: 100%;
+      }
+
+      h2 {
+        color: #0077b6;
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      p {
+        margin: 8px 0;
+        color: #333;
+      }
+
+      strong {
+        color: #005f8f;
+      }
+
+      label {
+        font-weight: 600;
+        display: block;
+        margin: 15px 0 5px;
+        color: #333;
+      }
+
+      textarea,
+      input[type="file"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+        margin-bottom: 15px;
+      }
+
+      textarea {
+        resize: vertical;
+        height: 120px;
+      }
+
+      button {
+        background-color: #0077b6;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        padding: 12px;
+        font-size: 16px;
+        width: 100%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      button:hover {
+        background-color: #005f8f;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="form-container">
+      <h2>Submit Result for {{ test_request.test.name }}</h2>
+      <p><strong>Patient:</strong> {{ test_request.patient.name }}</p>
+      <p><strong>Description:</strong> {{ test_request.description }}</p>
+
+      <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="result_text">Result Text:</label>
+        <textarea name="result_text" id="result_text" required></textarea>
+
+        <label for="result_file">Attach File (optional):</label>
+        <input type="file" name="result_file" id="result_file" />
+
+        <button type="submit">Submit Result</button>
+      </form>
+    </div>
+  </body>
+</html>

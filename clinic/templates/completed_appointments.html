@@ -1,0 +1,35 @@
+{% extends 'base_doctor.html' %} {% block title %}{{ doctor.name }}'s
+Schedule{%endblock %} {% block content %}
+
+<h1>Completed Appointments for Dr. {{ doctor.name }}</h1>
+
+{% if completed %}
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Patient</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for appt in completed %}
+    <tr>
+      <td>{{ appt.date }}</td>
+      <td>{{ appt.time }}</td>
+      <td>{{ appt.patient.name }}</td>
+      <td>
+        <a
+          href="{% url 'delete_appointment' appt.id %}"
+          onclick="return confirm('Delete this record permanently?');"
+        >
+          Delete
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p class="empty-state">You have no completed appointments.</p>
+{% endif %} {%endblock %}

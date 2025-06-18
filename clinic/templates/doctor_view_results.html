@@ -1,0 +1,76 @@
+{% extends 'base_doctor.html' %} {% block title %}{{ doctor.name }}'s
+Schedule{%endblock %} {% block content %}
+<style>
+  /* Main heading */
+  h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-top: 20px;
+    color: #2c3e50;
+  }
+
+  /* Unordered list styling */
+  ul {
+    list-style: none;
+    padding: 0;
+    max-width: 700px;
+    margin: 20px auto;
+  }
+
+  /* Each result card */
+  ul li {
+    background-color: #f9fafe;
+    border: 1px solid #d3e0ea;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+    font-family: "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+    color: #333;
+  }
+
+  /* Result file link */
+  ul li a {
+    color: #2980b9;
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  ul li a:hover {
+    text-decoration: underline;
+  }
+
+  /* Submitted at text */
+  ul li small,
+  ul li .submitted-time {
+    display: block;
+    margin-top: 5px;
+    font-size: 13px;
+    color: #666;
+  }
+
+  /* Empty list item */
+  ul li:last-child:only-child {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+  }
+</style>
+<h2>Your Lab Test Results</h2>
+<ul>
+  {% for res in results %}
+  <li>
+    {{ res.request.test_name }} for {{ res.request.patient.name }}<br />
+    Result: {{ res.result_text }}<br />
+    {% if res.result_file %}
+    <a href="{{ res.result_file.url }}" target="_blank">View Result File</a>
+    {% endif %}
+    <br />Submitted at: {{ res.submitted_at }}
+  </li>
+  {% empty %}
+  <li>No results yet.</li>
+  {% endfor %}
+</ul>
+{%endblock%}

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %}Admin Panel{% endblock %}</title>
+    <style>
+  body,
+h1,
+h2,
+p,
+ul,
+li,
+a,
+label,
+input,
+select,
+textarea,
+button {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  background-color: #f5f7fa;
+  color: #2c3e50;
+}
+
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #1c4e80;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 1000;
+}
+
+header .title {
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+
+
+header .nav a:hover,
+header .nav a:focus {
+  background-color: rgba(236, 240, 241, 0.2);
+  outline: none;
+}
+header .nav a {
+  color: #ecf0f1;
+  font-weight: 400;
+  font-size: 1rem;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;}
+
+header .nav a:hover {
+  text-decoration: underline;
+}
+
+/* FOOTER */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #34495e;
+  color: #ecf0f1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  z-index: 1000;
+}
+
+/* Adjust layout to leave space for header/footer */
+.content-wrapper {
+  display: flex;
+  flex-grow: 1;
+  margin-top: 60px; /* header height */
+  margin-bottom: 40px; /* footer height */
+  min-height: calc(100vh - 100px); /* total space minus header/footer */
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 220px;
+  background-color: #34495e;
+  color: #ecf0f1;
+  padding: 10px 15px;
+  display: flex;
+  flex-direction: column;
+
+  position: fixed;
+  top: 60px; /* below header */
+  bottom: 40px; /* above footer */
+  height: auto;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #2c3e50;
+  padding-bottom: 10px;
+}
+
+.sidebar a {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-weight: 600;
+  padding: 10px 12px;
+  border-radius: 5px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.sidebar a:hover {
+  background-color: #2c3e50;
+  color: #ecf0f1;
+}
+
+.sidebar a.active {
+  background-color: #2980b9;
+  color: white;
+}
+
+/* MAIN CONTENT */
+.main-content {
+  margin-left: 240px;
+  padding: 30px 40px;
+  flex-grow: 1;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+  overflow-y: auto;
+}
+
+/* Headings */
+h1,
+h2 {
+  margin-bottom: 20px;
+  color: #87a5c3;
+}
+
+/* Paragraph */
+p {
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+  color: #34495e;
+}
+
+/* Lists */
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+ul li {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  padding: 10px 15px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* Form styles */
+form {
+  background: white;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="password"],
+form select,
+form textarea,
+form input[type="date"],
+form input[type="time"] {
+  width: 100%;
+  padding: 10px 12px;
+  margin-top: 6px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form input[type="password"]:focus,
+form select:focus,
+form textarea:focus,
+form input[type="date"]:focus,
+form input[type="time"]:focus {
+  border-color: #2980b9;
+  outline: none;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+form button {
+  margin-top: 25px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  padding: 12px 22px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #1c5980;
+}
+
+form label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-right: 20px;
+  font-weight: 600;
+  color: #34495e;
+  cursor: pointer;
+}
+
+form input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: #2980b9;
+  margin: 0;
+}
+
+/* Links */
+a {
+  display: inline-block;
+  margin-top: 20px;
+  color: #2980b9;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #0e3b56;
+}
+
+br {
+  line-height: 1.5em;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #ecf0f1;
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Dashboard overview and summary */
+.dashboard-overview {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 30px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-summary {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.summary-card,
+.status-box {
+  background-color: #f0f4f8;
+  border: 1px solid #cbd5e1;
+  padding: 15px 20px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.05);
+  color: #334155;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  max-width: 300px;
+  margin-bottom: 25px;
+  min-width: 220px;
+}
+
+.status-box {
+  background-color: #e3f2fd;
+}
+
+.status-box h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.25rem;
+}
+
+.status-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.status-box ul li {
+  background: transparent !important;
+  color: #1565c0 !important;
+  border: none !important;
+  padding: 6px 0 !important;
+  border-radius: 0 !important;
+  margin-bottom: 0 !important;
+  font-weight: 600;
+  border-bottom: 1px solid #bbdefb !important;
+  white-space: nowrap;
+}
+
+.status-box ul li:last-child {
+  border-bottom: none !important;
+}
+
+.doctor-list li {
+  background-color: #eaf2f8;
+  color: #2c3e50;
+  font-weight: 500;
+  border-left: 4px solid #2980b9;
+}
+
+.me {
+  color: #0077cc;
+}
+
+
+    </style>
+  </head>
+  <body>
+   <header>
+  <div class="title">Wolaita Sodo University Clinic System</div>
+  <div class="nav">
+    <a href="/">Home</a>
+  
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+      <nav class="sidebar" role="navigation" aria-label="Admin menu">
+        <h2>Admin Dashboard</h2>
+             <a
+          href="{% url 'all_users' %}"
+          class="{% if request.resolver_match.url_name == 'all_users' %}active{% endif %}"
+          {% if request.resolver_match.url_name == 'all_users' %}aria-current="page"{% endif %}
+          >users</a
+        >
+        <a
+          href="{% url 'admin_invoice_summary' %}"
+          class="{% if request.resolver_match.url_name == 'admin_invoice_summary' %}active{% endif %}"
+          {% if request.resolver_match.url_name == 'admin_invoice_summary' %}aria-current="page"{% endif %}
+          >Invoices</a
+        >
+        <a
+          href="{% url 'register_receptionist' %}"
+          class="{% if request.resolver_match.url_name == 'register_receptionist' %}active{% endif %}"
+          {% if request.resolver_match.url_name == 'register_receptionist' %}aria-current="page"{% endif %}
+          >Register Receptionist</a
+        >
+        <a
+          href="{% url 'laboratorist_register' %}"
+          class="{% if request.resolver_match.url_name == 'laboratorist_register' %}active{% endif %}"
+          {% if request.resolver_match.url_name == 'laboratorist_register' %}aria-current="page"{% endif %}
+          >Register laboratorist</a
+        >
+        <a
+          href="{% url 'lab_test_create' %}"
+          class="{% if request.resolver_match.url_name == 'lab_test_create' %}active{% endif %}"
+          {% if request.resolver_match.url_name == 'lab_test_create' %}aria-current="page"{% endif %}
+          >Lab Test Create</a
+        >
+        <a
+          href="{% url 'approve_users' %}"
+          class="{% if request.resolver_match.url_name == 'approve_users' %}active{% endif %}"
+          {% if request.resolver_match.url_name == 'approve_users' %}aria-current="page"{% endif %}
+          >Approve Doctors</a
+        >
+        <a
+          href="{% url 'lab_test_list'  %}"
+          class="{% if request.resolver_match.url_name == 'lab_test_list' %}active{% endif %}"
+          {% if request.resolver_match.url_name == 'lab_test_list' %}aria-current="page"{% endif %}
+        >
+          Lab Test List
+        </a>
+        <a href="{% url 'logout' %}">Logout</a>
+      </nav>
+
+      <section class="main-content">{% block content %} {% endblock %}</section>
+    </div>
+
+    <footer>
+      &copy; 2025 Your Clinic Management System. All rights reserved.
+    </footer>
+  </body>
+</html>
+
+
+
+
+
+
+     

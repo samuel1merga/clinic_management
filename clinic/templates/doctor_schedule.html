@@ -1,0 +1,77 @@
+{% extends 'base_doctor.html' %} {% block title %}{{ doctor.name }}'s
+Schedule{%endblock %} {% block content %}
+<h1>{{ doctor.name }}'s Schedule</h1>
+
+<table border="1">
+  <thead>
+    <tr>
+      <th>Patient Name</th>
+      <th>Appointment Date</th>
+      <th>Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for appointment in appointments %}
+    <tr>
+      <td>{{ appointment.patient.name }}</td>
+      <td>{{ appointment.date }}</td>
+      <td>{{ appointment.time }}</td>
+      <td>{{ appointment.status }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="4">No appointments scheduled.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<h2>Your Scheduled Appointments</h2>
+
+{% if messages %}
+<ul>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %} {% if appointments %}
+<table border="1">
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Patient</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for appt in appointments %}
+    <tr>
+      <td>{{ appt.date }}</td>
+      <td>{{ appt.time }}</td>
+      <td>{{ appt.patient.name }}</td>
+      <td>{{ appt.status }}</td>
+      <td>
+        {% if appt.status == "scheduled" %}
+        <a href="{% url 'update_appointment_status' appt.id 'accepted' %}"
+          >Accept</a
+        >
+        |
+        <a href="{% url 'update_appointment_status' appt.id 'rejected' %}"
+          >Reject</a
+        >
+        {% elif appt.status == "accepted" %}
+        <a href="{% url 'update_appointment_status' appt.id 'completed' %}"
+          >Mark as Completed</a
+        >
+        {% else %} - {% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No appointments.</p>
+{% endif %} {% endblock %}

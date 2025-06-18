@@ -1,0 +1,33 @@
+{% extends 'base_doctor.html' %} {% block title %} {{ doctor.name }}'s Schedule
+{% endblock %} {% block content %}
+<h1>Upload Medical Record</h1>
+<p>Doctor: Dr. {{ doctor.name }}</p>
+
+<div class="messages">
+  {% for message in messages %}
+  <div class="{{ message.tags }}">{{ message }}</div>
+  {% endfor %}
+</div>
+
+<form method="POST">
+  {% csrf_token %}
+
+  <label for="patient">Select Patient:</label>
+  <select id="patient" name="patient" required>
+    <option value="">-- Select Patient --</option>
+    {% for appointment in medical %}
+    <option value="{{ appointment.patient.id }}">
+      {{ appointment.patient.name }}
+    </option>
+    {% endfor %}
+  </select>
+
+  <label for="diagnosis">Diagnosis:</label>
+  <textarea id="diagnosis" name="diagnosis" rows="4" required></textarea>
+
+  <label for="treatment">Treatment:</label>
+  <textarea id="treatment" name="treatment" rows="4" required></textarea>
+
+  <button type="submit">Submit Record</button>
+</form>
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends 'receptionist_base.html' %} {% block title %}Register
+Patient{%endblock %} {% block content %}
+
+<h1>Register a New Patient</h1>
+<!-- Your form or content here -->
+
+<!-- Display any error or success messages -->
+{% if messages %}
+<ul>
+  {% for message in messages %}
+  <li>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<form method="POST">
+  {% csrf_token %}
+
+  <label for="name">Name:</label>
+  <input type="text" name="name" required /><br />
+
+  <label for="id">id:</label>
+  <input type="text" name="id" required /><br />
+
+  <label for="age">Age:</label>
+  <input type="number" name="age" required /><br />
+
+  <label>Gender:</label><br />
+  <label>
+    <input type="radio" name="gender" value="Male" required />
+    Male
+  </label>
+  <label>
+    <input type="radio" name="gender" value="Female" required />
+    Female
+  </label>
+  <br />
+
+  <label for="contact_number">Contact Number:</label>
+  <input type="text" name="contact_number" required /><br />
+
+  <label for="address">Address:</label>
+  <textarea name="address" required></textarea><br />
+
+  <label for="medical_history">Medical History:</label>
+  <textarea name="medical_history"></textarea><br />
+
+  <label for="emergency_contact_name">Emergency Contact Name:</label>
+  <input type="text" name="emergency_contact_name" required /><br />
+
+  <label for="emergency_contact_number">Emergency Contact Number:</label>
+  <input type="text" name="emergency_contact_number" required /><br />
+
+  <label for="password">passwordr:</label>
+  <input type="password" name="password" required /><br />
+
+  <button type="submit">Register Patient</button>
+</form>
+
+<br />
+
+{% endblock %}

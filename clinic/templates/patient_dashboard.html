@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Dashboard</title>
+    <style>
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f6f8;
+        color: #2c3e50;
+      }
+
+      .wrapper {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 60px;
+        background-color: #1c4e80;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 1000;
+      }
+
+      header .title {
+        font-size: 1.4rem;
+        font-weight: bold;
+      }
+
+      header .nav a {
+        color: #ecf0f1;
+        margin-right: 20px;
+        font-weight: 400;
+        font-size: 1rem;
+        text-decoration: none;
+        padding: 6px 10px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+      }
+
+      header .nav a:hover {
+        text-decoration: underline;
+        background-color: rgba(236, 240, 241, 0.2);
+      }
+
+      main {
+        flex: 1;
+        padding: 100px 20px 60px; /* Padding to avoid header/footer overlap */
+        box-sizing: border-box;
+      }
+
+      h1 {
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+
+      .dashboard-summary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+      }
+
+      .summary-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        padding: 25px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        flex: 1;
+        min-width: 300px;
+        max-width: 600px;
+      }
+
+      .summary-card h2 {
+        margin-bottom: 20px;
+        font-size: 1.4rem;
+        color: #2980b9;
+        border-bottom: 2px solid #dbe9f4;
+        padding-bottom: 8px;
+      }
+
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      ul li {
+        background: #f9fbfc;
+        border: 1px solid #e1e8ed;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        line-height: 1.6;
+      }
+
+      /* Status colors */
+      .status {
+        font-weight: bold;
+      }
+
+      .status.completed {
+        color: green;
+      }
+
+      .status.scheduled {
+        color: blue;
+      }
+
+      .status.cancelled,
+      .status.rejected {
+        color: red;
+      }
+
+      .status.unknown {
+        color: black;
+      }
+
+      .container {
+        margin-top: 30px;
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      footer {
+        background-color: #34495e;
+        color: #ecf0f1;
+        text-align: center;
+        padding: 10px 15px;
+        font-size: 14px;
+      }
+
+      footer .about {
+        margin-bottom: 5px;
+      }
+
+      footer .about a {
+        color: #ecf0f1;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      footer .about a:hover {
+        text-decoration: none;
+        color: #ebeb15;
+      }
+
+      footer .copyright {
+        color: #bdc3c7;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <div class="title">Clinic System</div>
+        <div class="nav">
+          <a href="/">Home</a>
+        </div>
+      </header>
+
+      <main>
+        <h1>Welcome, {{ patient.name }}</h1>
+
+        <div class="dashboard-summary">
+          <div class="summary-card">
+            <h2>Your Appointments</h2>
+            {% if appointments %}
+            <ul>
+              {% for appt in appointments %}
+              <li>
+                <strong>Date:</strong> {{ appt.date }}<br />
+                <strong>Time:</strong> {{ appt.time }}<br />
+                <strong>Doctor:</strong> Dr. {{ appt.doctor.name }}<br />
+                <span
+                  class="status {% if appt.status == 'completed' %}completed{% elif appt.status == 'scheduled' %}scheduled{% elif appt.status == 'cancelled' or appt.status == 'rejected' %}cancelled{% else %}unknown{% endif %}"
+                >
+                  {{ appt.get_status_display }}
+                </span>
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p>No appointments found.</p>
+            {% endif %}
+          </div>
+
+          <div class="summary-card">
+            <h2>Your Medical Records</h2>
+            {% if medical_records %}
+            <ul>
+              {% for record in medical_records %}
+              <li>
+                <strong>Date:</strong> {{ record.date|date:"Y-m-d H:i" }}<br />
+                <strong>Doctor:</strong> Dr. {{ record.doctor.name }}<br />
+                <strong>Diagnosis:</strong> {{ record.diagnosis }}<br />
+                <strong>Treatment:</strong> {{ record.treatment }}
+              </li>
+              {% endfor %}
+            </ul>
+            {% else %}
+            <p>No medical records available.</p>
+            {% endif %}
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <div class="copyright">
+          &copy; 2025 Your Clinic Management System. All rights reserved.
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

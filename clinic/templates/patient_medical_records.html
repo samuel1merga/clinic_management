@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Medical Records for {{ patient.name }}</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 1rem;
+        background: #f7f9fc;
+        color: #333;
+      }
+      h1 {
+        text-align: center;
+        color: #005a9c;
+      }
+      .record {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+      }
+      .record h3 {
+        margin: 0 0 0.5rem;
+        color: #0077cc;
+      }
+      .record p {
+        margin: 0.25rem 0;
+      }
+      .date {
+        font-size: 0.9rem;
+        color: #666;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Medical Records for {{ patient.name }}</h1>
+
+    {% if records %} {% for rec in records %}
+    <div class="record">
+      <h3>Diagnosis</h3>
+      <p>{{ rec.diagnosis|linebreaks }}</p>
+
+      <h3>Treatment</h3>
+      <p>{{ rec.treatment|linebreaks }}</p>
+
+      <p class="date">
+        Recorded by Dr. {{ rec.doctor.name }} on {{ rec.date|date:"F j, Y, g:i
+        a" }}
+      </p>
+    </div>
+    {% endfor %} {% else %}
+    <p>No medical records found.</p>
+    {% endif %}
+  </body>
+</html>

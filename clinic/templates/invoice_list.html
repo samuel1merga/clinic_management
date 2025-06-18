@@ -1,0 +1,32 @@
+<!-- invoice_list.html -->
+{% extends 'base.html' %} {% block content %}
+<div class="container">
+  <h2>Your Invoices</h2>
+  {% if invoices %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Invoice ID</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Status</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for invoice in invoices %} {% for item in invoice.invoiceitem_set.all%}
+      <tr>
+        <td>{{ invoice.patient.name }}</td>
+        <td>{{ invoice.created_by }}</td>
+        <td>${{ item.amount }}</td>
+        <td>{{ invoice.status|default:"Pending" }}</td>
+        <td>{{ invoice.created_at|date:"Y-m-d" }}</td>
+      </tr>
+      {% endfor %} {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p>No invoices found.</p>
+  {% endif %}
+</div>
+{% endblock %}
