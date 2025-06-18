@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-90+$982h=s=u6bt&k5ol60yeb+lasrh#t__03iy2yb%5-!tq#_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['clinic-management-bfr3.onrender.com']
+ALLOWED_HOSTS = ['.onrender.com']
 LOGIN_URL = '/login/doctor/'
 
 # Application definition
